@@ -31,19 +31,38 @@ A backend infrastructure designed for data persistence and advanced computationa
 * **Business Logic:** Architecture ready for user authentication, game history persistence, and Elo tracking (SaaS-ready).
 
 ---
-
 ## 🛠️ Engineering Decisions & "The Why"
 
+* **Graphics Optimization (Kivy on SDL2):** I chose to run Kivy directly on top of SDL2 to minimize memory footprint and CPU overhead. This ensures a fluid 60fps UI even on a Raspberry Pi 2, which is critical for a "premium" feel.
 * **Modular Hardware/Software Decoupling:** I intentionally separated the *ChessStation* (gateway) from the *Board Accessory* (sensors). While a dedicated Kernel Driver (`/dev/chessboard`) was an alternative, this modular approach allows the system to remain compatible with 3rd-party hardware (DGT) while simplifying hardware maintenance and iterations.
 * **RTOS Selection (Zephyr):** Choosing Zephyr for the sensor module ensures a modern, thread-safe environment. Its superior HAL makes the project resilient to supply chain shifts, as switching MCUs requires only minor configuration changes rather than a full code rewrite.
 * **Industrial Linux Standard (Yocto):** Avoiding generic distros (like Raspbian) in favor of Yocto allows for a professional, read-only, and reproducible build system. This ensures the *ChessStation* is treated as an appliance rather than a general-purpose PC.
 
 ---
 
+## 📖 Deep Dive Documentation
+
+* [**Hardware & EE Design**](docs/hardware.md): Schematics, Hall effect matrix design, and PCB photos.
+* [**Software & UI Architecture**](docs/software.md): Yocto recipes, Kivy/SDL2 implementation, and LangGraph logic.
+
+---
+
+## 🔧 Tech Stack
+
+| Layer | Technologies |
+| :--- | :--- |
+| **Operating Systems** | Yocto Project (Linux), Zephyr RTOS |
+| **Graphics / UI** | Kivy, SDL2 (Direct Framebuffer) |
+| **Languages** | Python, C, C++ |
+| **Hardware** | STM32 (L0/L4), Raspberry Pi, 7" IPS Touchscreen, Hall Sensors |
+| **AI & Backend** | LangGraph, Python API |
+
+---
+
 ## 🚀 Development Roadmap
 - [ ] Implement USB/OTA Firmware Update (DFU) for the board accessory.
 - [ ] Database integration for game history and user profiles.
-
+- [ ] DGT Boards full support
 ---
 
 ## 🔧 Tech Stack
@@ -55,4 +74,3 @@ A backend infrastructure designed for data persistence and advanced computationa
 | **Hardware** | STM32 (L0/L4), Raspberry Pi, Hall Effect Sensors, Multiplexers |
 | **AI & Backend** | LangGraph, Python API, AI Analysis Engines |
 | **Bootloaders** | U-Boot |
-
