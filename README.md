@@ -56,6 +56,3 @@ A backend infrastructure designed for data persistence and advanced computationa
 | **AI & Backend** | LangGraph, Python API, AI Analysis Engines |
 | **Bootloaders** | U-Boot |
 
----
-
-> **Note for Recruiters:** This project showcases a full-stack embedded profile: from low-level sensor multiplexing and RTOS firmware development to custom Linux distribution building and AI-integrated cloud backends.
