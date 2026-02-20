@@ -8,21 +8,21 @@ This document details the physical layer of the project, covering the **ChessSta
 
 The hardware is designed to be modular. The **ChessStation** acts as the host gateway, while the **Board Accessory** acts as a specialized USB peripheral. This decoupling allows the station to support 3rd-party boards (e.g., DGT) and simplifies the iteration of the sensing matrix hardware.
 
-
-
 ---
 
 ## 2. ChessStation (The Brain)
 
-The ChessStation is the central gateway that handles high-level logic, internet connectivity, and the chess engine interface.
+The ChessStation is the central gateway and user interface hub. It handles high-level game logic, internet connectivity, and provides visual feedback to the player.
 
 * **Computing Unit:** Raspberry Pi 2 / 3 (Broadcom BCM2835/BCM2837).
-* **Power Management:** 5V/2.5A DC input via Micro-USB.
-* **Storage:** Industrial-grade microSD with a **read-only rootfs** (configured via Yocto) to prevent filesystem corruption during hard power-offs.
-
-> **[PLACEHOLDER: Insert photo of your ChessStation/Raspberry Pi setup here]**
-> *Caption: The ChessStation enclosure housing the Raspberry Pi and custom I/O shielding.*
-
+* **Display:** 7-inch IPS Capacitive Touchscreen.
+    * **Resolution:** 1024x600 HD.
+    * **Interface:** HDMI for video + USB for touch capacitive feedback.
+* **UI Stack:** Optimized to run **Kivy on SDL2** directly, bypassing X11 for lower latency.
+* **Storage:** Industrial-grade microSD with a **read-only rootfs** (Yocto) to prevent filesystem corruption during hard power-offs.
+  
+> **[PLACEHOLDER: Insert photo of the 7" Touchscreen showing the Chess UI here]**
+> *Caption: The 7-inch IPS interface providing real-time analysis and game controls.*
 ---
 
 ## 3. USB Board Accessory (Sensing Layer)
@@ -60,17 +60,6 @@ The board is controlled by an **STM32 (L4 or L0 series)**, chosen for its excell
 
 ### Connectivity & Power
 By using a dedicated MCU for the board, we offload the real-time scanning tasks from the Raspberry Pi. This ensures that the ChessStation's CPU is fully available for AI analysis and network handling, while the board operates as a low-power "dumb" peripheral until a move is detected.
-
----
-
-## 5. Bill of Materials (BoM) - Highlights
-
-| Component | Description | Purpose |
-| :--- | :--- | :--- |
-| **Raspberry Pi** | 2 / 3 B+ | Main CPU / Gateway |
-| **STM32L4** | ARM Cortex-M4 | Sensor Controller |
-| **A3144** | Hall Effect Sensors (x64) | Piece Detection |
-| **CD74HC4067** | 16-Ch Analog Mux (x4) | Matrix Scanning |
 
 ---
 
