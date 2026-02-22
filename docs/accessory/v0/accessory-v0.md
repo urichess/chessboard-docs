@@ -43,7 +43,7 @@ The core of the system is a **4-layer PCB** designed for high signal integrity a
 The board was designed to handle both the high-speed processing of the STM32 and the wireless capabilities of the ESP32.
 
 ![Schematic Preview](./accessory-stm32-v0.png)
-[Click here to download the full Electrical Schematic (PDF)](.accessory-stm32-v0.pdf)
+[Click here to download the full Electrical Schematic (PDF)](./accessory-stm32-v0.pdf)
 
 ---
 
