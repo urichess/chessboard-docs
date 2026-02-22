@@ -45,7 +45,7 @@ The system utilizes an **8x8 Hall Effect Sensor Matrix**. Each of the 64 squares
 ### 3.2 Evolution of the Accessory
 The design has moved from a hand-wired proof-of-concept to a fully integrated large-format PCB.
 
-* **[View Prototype V0 (Proof of Concept)](../accessory/v0/accessory-v0.md):** Details on the initial 8x8 glued sensor matrix and hand-soldered 4-layer STM32/ESP32 board.
+* **[View Prototype V0 (Proof of Concept)](./accessory/v0/accessory-v0.md):** Details on the initial 8x8 glued sensor matrix and hand-soldered 4-layer STM32/ESP32 board.
 * **Future Version (V1):** Integrated 40cm x 40cm PCB combining sensors and logic into a single unit.
 
 ---
