@@ -12,7 +12,7 @@ The system utilizes an 8x8 matrix of analog Hall effect sensors to detect the pr
 * **Control Logic:** A custom 4-layer STM32-based control board reads the multiplexed analog signals.
 
 ### Sensor Matrix Construction
-![Wooden sensor bed with glued sensors and multiplexers](./docs/accessory/v0/sensors-matrix-v0.jpeg)
+![Wooden sensor bed with glued sensors and multiplexers](./sensors-matrix-v0.jpeg)
 *Figure 1: 8x8 Hall effect sensors and multiplexers manually fixed to the wooden base.*
 
 ---
@@ -33,7 +33,7 @@ The core of the system is a **4-layer PCB** designed for high signal integrity a
 | **Wireless** | **ESP32** module (for WiFi/BT experiments; to be removed) |
 
 ### PCB Assembly
-![Hand soldered STM32 and ESP32 board](./docs/accessory/v0/stm-board-v0.jpeg)
+![Hand soldered STM32 and ESP32 board](./stm-board-v0.jpeg)
 *Figure 2: Custom 4-layer PCB. All components, including the STM32 and ESP32, were hand-soldered for this prototype.*
 
 ---
@@ -42,8 +42,8 @@ The core of the system is a **4-layer PCB** designed for high signal integrity a
 
 The board was designed to handle both the high-speed processing of the STM32 and the wireless capabilities of the ESP32.
 
-![Schematic Preview](./docs/accessory/v0/accessory-stm32-v0.png)
-[Click here to download the full Electrical Schematic (PDF)](./docs/accessory/v0/accessory-stm32-v0.pdf)
+![Schematic Preview](./accessory-stm32-v0.png)
+[Click here to download the full Electrical Schematic (PDF)](.accessory-stm32-v0.pdf)
 
 ---
 
