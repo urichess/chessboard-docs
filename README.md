@@ -28,7 +28,7 @@ A cost-effective sensor module (approx. 200€ vs 600€ for commercial alternat
 ### 3. Cloud Analysis Server
 A backend infrastructure designed for data persistence and advanced computational analysis.
 * **AI Engine:** Analysis API developed with **Python** and **LangGraph** to manage complex, stateful AI-driven analysis workflows.
-* **Business Logic:** Architecture ready for user authentication, game history persistence, and Elo tracking (SaaS-ready).
+* **Business Logic:** Architecture ready for user authentication, game history persistence, and Elo tracking.
 
 ---
 ## 🛠️ Engineering Decisions & "The Why"
@@ -36,7 +36,7 @@ A backend infrastructure designed for data persistence and advanced computationa
 * **Graphics Optimization (Kivy on SDL2):** I chose to run Kivy directly on top of SDL2 to minimize memory footprint and CPU overhead. This ensures a fluid 60fps UI even on a Raspberry Pi 2, which is critical for a "premium" feel.
 * **Modular Hardware/Software Decoupling:** I intentionally separated the *ChessStation* (gateway) from the *Board Accessory* (sensors). While a dedicated Kernel Driver (`/dev/chessboard`) was an alternative, this modular approach allows the system to remain compatible with 3rd-party hardware (DGT) while simplifying hardware maintenance and iterations.
 * **RTOS Selection (Zephyr):** Choosing Zephyr for the sensor module ensures a modern, thread-safe environment. Its superior HAL makes the project resilient to supply chain shifts, as switching MCUs requires only minor configuration changes rather than a full code rewrite.
-* **Industrial Linux Standard (Yocto):** Avoiding generic distros (like Raspbian) in favor of Yocto allows for a professional, read-only, and reproducible build system. This ensures the *ChessStation* is treated as an appliance rather than a general-purpose PC.
+* **Industrial Linux Standard (Yocto):** Avoiding generic distros (like Raspbian) in favor of Yocto allows for a professional and reproducible build system. This ensures the *ChessStation* is treated as an appliance rather than a general-purpose PC.
 
 ---
 
