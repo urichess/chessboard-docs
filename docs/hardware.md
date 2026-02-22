@@ -1,66 +1,53 @@
 # 🛠️ Hardware Architecture & Design
 
-This document details the physical layer of the project, covering the **ChessStation** (Processing Hub) and the **USB Board Accessory** (Sensing Layer).
+This document details the physical layer of the project, focusing on the modular interface between the **ChessStation** (Processing Hub) and the **USB Board Accessory** (Sensing Layer).
 
 ---
 
 ## 1. System Overview
 
-The hardware is designed to be modular. The **ChessStation** acts as the host gateway, while the **Board Accessory** acts as a specialized USB peripheral. This decoupling allows the station to support 3rd-party boards (e.g., DGT) and simplifies the iteration of the sensing matrix hardware.
+The hardware is built on a **decoupled architecture**. The ChessStation acts as a universal host gateway, while the Board Accessory functions as a specialized USB peripheral. 
+
+This separation allows for:
+* **Interoperability:** Support for different sensing technologies (Hall Effect, Reed switches, or 3rd-party DGT boards).
+* **Reliability:** Real-time sensor scanning is offloaded to a dedicated MCU, preventing OS-level jitter from the Raspberry Pi.
+
+
 
 ---
 
 ## 2. ChessStation (The Brain)
 
-The ChessStation is the central gateway and user interface hub. It handles high-level game logic, internet connectivity, and provides visual feedback to the player.
+The ChessStation is the central gateway and user interface hub. It handles high-level game logic, Stockfish engine analysis, and internet connectivity.
 
 * **Computing Unit:** Raspberry Pi 2 / 3 (Broadcom BCM2835/BCM2837).
-* **Display:** 7-inch IPS Capacitive Touchscreen.
-    * **Resolution:** 1024x600 HD.
+* **Display:** 7-inch IPS Capacitive Touchscreen (1024x600 HD).
     * **Interface:** HDMI for video + USB for touch capacitive feedback.
-* **UI Stack:** Optimized to run **Kivy on SDL2** directly, bypassing X11 for lower latency.
-* **Storage:** Industrial-grade microSD with a **read-only rootfs** (Yocto) to prevent filesystem corruption during hard power-offs.
-  
-> **[PLACEHOLDER: Insert photo of the 7" Touchscreen showing the Chess UI here]**
+* **OS Environment:** Custom **Yocto-based Linux** with a **read-only rootfs** to prevent filesystem corruption during hard power-offs.
+* **UI Stack:** Optimized **Kivy on SDL2** running directly on the framebuffer for minimum latency.
+
+> ![Chess UI Preview](./assets/display-ui.jpg)
 > *Caption: The 7-inch IPS interface providing real-time analysis and game controls.*
+
 ---
 
 ## 3. USB Board Accessory (Sensing Layer)
 
-This custom module digitizes a standard chess board using a cost-optimized sensor array.
+The Board Accessory digitizes a physical chessboard using a cost-optimized analog sensor array. While the core logic remains consistent, the physical implementation is being iterated.
 
 ### 3.1 Piece Detection & Matrix Scanning
-The system uses a **Hall Effect Sensor Matrix**. Each of the 64 squares contains a sensor that detects the magnetic field of neodymium magnets embedded in the chess pieces.
+The system utilizes an **8x8 Hall Effect Sensor Matrix**. Each of the 64 squares contains a sensor that detects the magnetic field of magnets embedded in the chess pieces.
 
-* **Sensors:** 64x Hall Effect sensors (Digital/Unipolar).
-* **Multiplexing Architecture:** To manage 64 inputs with limited MCU pins, the design utilizes **4x 16-channel Multiplexers** (CD74HC4067). 
-* **Scanning Logic:** The STM32 cycles through the select lines of the multiplexers to sample each square. This creates a serialized "bit-map" of the board's current state.
+* **Scanning Logic:** The MCU cycles through the select lines of **4x 16-channel Multiplexers** (CD74HC4067).
+* **Signal Integrity:** A 4-layer PCB design with dedicated ground planes and **RC filters** ensures clean analog-to-digital conversion even with the electromagnetic interference inherent in large matrices.
+* **MCU:** STM32 (ARM Cortex-M) handling high-speed scanning and USB-HID/Serial communication.
 
-### 3.2 Electrical Schematic (EE)
-The schematic focuses on signal integrity and minimizing power consumption of the sensor array.
+### 3.2 Evolution of the Accessory
+The design has moved from a hand-wired proof-of-concept to a fully integrated large-format PCB.
 
-> **[PLACEHOLDER: Insert your Electrical Schematic/Circuit Diagram here]**
-> *Caption: Schematic showing the STM32 pinout, the 4-multiplexer tree, and the 8x8 Hall sensor grid wiring.*
-
-### 3.3 Microcontroller (MCU)
-The board is controlled by an **STM32 (L4 or L0 series)**, chosen for its excellent power-to-performance ratio and native USB support.
-* **Firmware:** Zephyr RTOS manages the scanning threads and the USB HID/Serial stack.
-* **Portability:** The hardware abstraction layer allows the same firmware to run on STM32L476, STM32L0, or Arduino Uno R4 with minimal configuration changes.
-
-> **[PLACEHOLDER: Insert photo of the physical Board Accessory / Sensor Matrix here]**
-> *Caption: View of the 8x8 sensor matrix integrated into the board's underside.*
+* **[View Prototype V0 (Proof of Concept)](../accessory/v0/accessory-v0.md):** Details on the initial 8x8 glued sensor matrix and hand-soldered 4-layer STM32/ESP32 board.
+* **Future Version (V1):** Integrated 40cm x 40cm PCB combining sensors and logic into a single unit.
 
 ---
 
-## 4. Technical Challenges & Solutions
-
-### Magnetic Cross-talk
-**Problem:** Neodymium magnets from adjacent squares could trigger neighboring sensors.
-**Solution:** Fine-tuning the sensor threshold in the firmware and implementing a "debouncing" algorithm that requires a stable signal for a set number of scan cycles before confirming a state change.
-
-### Connectivity & Power
-By using a dedicated MCU for the board, we offload the real-time scanning tasks from the Raspberry Pi. This ensures that the ChessStation's CPU is fully available for AI analysis and network handling, while the board operates as a low-power "dumb" peripheral until a move is detected.
-
----
-
-[Back to Main README](../README.md)
+[Return to Project README](../README.md)
