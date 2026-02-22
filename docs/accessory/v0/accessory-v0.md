@@ -11,28 +11,43 @@ The system utilizes an 8x8 matrix of analog Hall effect sensors to detect the pr
 * **Signal Routing:** Hand-soldered wiring connects the sensors to four 16-channel multiplexers (also mounted to the wood).
 * **Control Logic:** A custom 4-layer STM32-based control board reads the multiplexed analog signals.
 
-
+### Sensor Matrix Construction
+![Wooden sensor bed with glued sensors and multiplexers](./sensors matrix v0.jpg)
+*Figure 1: 8x8 Hall effect sensors and multiplexers manually fixed to the wooden base.*
 
 ---
 
 ## 2. Hardware Specifications
 
 ### Main Control Board
-The core of the system is a **4-layer PCB** designed for high signal integrity and noise reduction during high-speed multiplexing.
+The core of the system is a **4-layer PCB** designed for high signal integrity and noise reduction. 
 
 | Component | Description |
 | :--- | :--- |
 | **MCU** | STM32 Microcontroller (ARM Cortex-M) |
-| **Filtering** | Integrated **RC filters** on analog input lines to stabilize long wire runs |
+| **Filtering** | Integrated **RC filters** on analog input lines |
 | **Multiplexers** | 4x 16-channel muxes for 64-point scanning |
 | **Debug** | Dedicated **UART** output and **SWD** connector |
 | **Expansion** | I2C and SPI headers for external peripherals |
 | **Storage** | Unpopulated slot for **Flash Memory** (SMD footprint) |
-| **Wireless** | **ESP32** module (included for WiFi/BT experiments; to be removed) |
+| **Wireless** | **ESP32** module (for WiFi/BT experiments; to be removed) |
+
+### PCB Assembly
+![Hand soldered STM32 and ESP32 board](./sensors matrix v0.jpg)
+*Figure 2: Custom 4-layer PCB. All components, including the STM32 and ESP32, were hand-soldered for this prototype.*
 
 ---
 
-## 3. Construction & Assembly Notes
+## 3. Schematic & Design
+
+The board was designed to handle both the high-speed processing of the STM32 and the wireless capabilities of the ESP32.
+
+![Schematic Preview](./chessboard v0.png)
+[Click here to download the full Electrical Schematic (PDF)](./chessboard v0.pdf)
+
+---
+
+## 4. Construction & Assembly Notes
 
 > [!IMPORTANT]
 > This iteration was a "hybrid" build intended to prove the electronics before committing to a full-scale 40cm PCB.
@@ -43,7 +58,7 @@ The core of the system is a **4-layer PCB** designed for high signal integrity a
 
 ---
 
-## 4. Evaluation & Next Steps
+## 5. Evaluation & Next Steps
 
 ### Achievements
 * Successfully read 8x8 matrix via STM32 ADC.
